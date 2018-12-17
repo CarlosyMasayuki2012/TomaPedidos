@@ -17,8 +17,9 @@ public class MostrarClienteActivity extends AppCompatActivity {
 
     Button btnpedido;
     Clientes cliente;
-    ArrayList<Usuario> listaUsuario;
-    TextView tvcodigo,tvNombre,tvDireccion,tvGiro,tvTipoCiente,tvDeuda,tvestado,tvFechaUltPedido,tvUsuarioUltPedido;
+
+    TextView tvcodigo,tvNombre,tvDireccion,tvGiro,tvTipoCiente,tvDeuda,tvestado,tvFechaUltPedido,
+            tvUsuarioUltPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MostrarClienteActivity extends AppCompatActivity {
         tvFechaUltPedido = findViewById(R.id.tvfechaultregistro);
         tvUsuarioUltPedido = findViewById(R.id.tvUsuarioUltPedido);
 
-        tvcodigo.setText(cliente.getIdCliente().toString());
+        tvcodigo.setText(cliente.getIdCliente());
         tvNombre.setText(cliente.getNombre());
         tvDireccion.setText(cliente.getDireccion());
         tvGiro.setText(cliente.getGiro());
@@ -55,6 +56,9 @@ public class MostrarClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MostrarClienteActivity.this,ListadoAlmacenActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Cliente",cliente);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }

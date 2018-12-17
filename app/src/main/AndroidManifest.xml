@@ -22,7 +22,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BusquedaClienteActivity" />
         <activity android:name=".MostrarClienteActivity" />
-        <activity android:name=".ListadoAlmacenActivity"></activity>
+        <activity android:name=".ListadoAlmacenActivity" />
+        <activity android:name=".TipoPagoActivity"></activity>
     </application>
 
 </manifest>
