@@ -9,9 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
-import com.example.sistemas.tomapedidos.Entidades.Usuario;
-
-import java.util.ArrayList;
 
 public class MostrarClienteActivity extends AppCompatActivity {
 
@@ -30,10 +27,10 @@ public class MostrarClienteActivity extends AppCompatActivity {
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
 
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
-        tvcodigo = findViewById(R.id.tvCodigo);
-        tvNombre = findViewById(R.id.tvNombre);
+        tvcodigo = findViewById(R.id.tvcodigoproducto);
+        tvNombre = findViewById(R.id.tvNombreCliente);
         tvDireccion = findViewById(R.id.tvDireccion);
-        tvGiro = findViewById(R.id.tvGiro);
+        tvGiro = findViewById(R.id.tvnombreProducto);
         tvTipoCiente = findViewById(R.id.tvTipoCliente);
         tvDeuda = findViewById(R.id.tvDeuda);
         tvestado = findViewById(R.id.tvEstado);
@@ -55,12 +52,15 @@ public class MostrarClienteActivity extends AppCompatActivity {
         btnpedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MostrarClienteActivity.this,ListadoAlmacenActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
+
+
             }
         });
 

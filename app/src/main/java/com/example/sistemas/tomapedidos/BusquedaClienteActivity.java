@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +27,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
     Clientes cliente;
     ListView lvclientes;
     ArrayList<String> listaCliente;
+    EditText etcliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
         rbcodigo = findViewById(R.id.rbCodigo);
         btnbuscar = findViewById(R.id.btnBuscar);
         lvclientes = findViewById(R.id.lvClientes);
+        etcliente = findViewById(R.id.etcliente);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item,listaCliente);
 
@@ -67,7 +70,6 @@ public class BusquedaClienteActivity extends AppCompatActivity {
             }
         });
 
-
         lvclientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -79,7 +81,6 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                 cliente =  listaClientes.get(position);
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtras(bundle);
-
                 startActivity(intent);
                 finish();
 
@@ -93,8 +94,12 @@ public class BusquedaClienteActivity extends AppCompatActivity {
 
                     case R.id.rbNombre:
 
+                        etcliente.setInputType(1);
+
                         break;
                     case R.id.rbCodigo:
+
+                        etcliente.setInputType(2);
 
                         break;
                 }
