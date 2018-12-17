@@ -27,7 +27,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
     ArrayList<String> listabandejaproductos;
     Clientes cliente;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +72,15 @@ public class bandejaProductosActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listabandejaproductos);
 
         lvbandejaproductos.setAdapter(adapter);
+        lvbandejaproductos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                return true;
+            }
+        });
 
         lvbandejaproductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

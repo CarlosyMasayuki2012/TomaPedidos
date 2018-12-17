@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity
     TextView tvusuario;
     Usuario usuario;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +39,8 @@ public class MainActivity extends AppCompatActivity
 
         usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
 
-
-
-        tvusuario.setText(usuario.getCodigo()+ " - "+ usuario.getNombre()+" "+ usuario.getApellido());
+        String cadenaAux = usuario.getCodigo()+ " - "+ usuario.getNombre()+" "+ usuario.getApellido();
+        tvusuario.setText(cadenaAux);
 
         btnprimero.setOnClickListener(new View.OnClickListener() {
             @Override

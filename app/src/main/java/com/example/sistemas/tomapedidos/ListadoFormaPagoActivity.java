@@ -55,7 +55,6 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
 
-
                // Toast.makeText(ListadoFormaPagoActivity.this, listatipopago.get(position), Toast.LENGTH_SHORT).show();
             }
         });
