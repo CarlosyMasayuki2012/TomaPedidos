@@ -27,7 +27,8 @@
         <activity android:name=".ListadoFormaPagoActivity" />
         <activity android:name=".BuscarProductoActivity" />
         <activity android:name=".DetalleProductoActivity" />
-        <activity android:name=".bandejaProductosActivity"></activity>
+        <activity android:name=".bandejaProductosActivity" />
+        <activity android:name=".BandejaProductosversion2Activity"></activity>
     </application>
 
 </manifest>
