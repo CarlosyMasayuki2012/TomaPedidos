@@ -90,7 +90,6 @@ public class BuscarProductoActivity extends AppCompatActivity {
                 intent.putExtras(bundle1);
                 startActivity(intent);
                 finish();
-
             }
         });
 
@@ -102,12 +101,14 @@ public class BuscarProductoActivity extends AppCompatActivity {
                     case R.id.rbNombreProducto:
 
                         etproducto.setInputType(1);
+
                         break;
                     case R.id.rbCodigoProducto:
+
                         etproducto.setInputType(2);
+
                         break;
                 }
-
             }
         });
     }
