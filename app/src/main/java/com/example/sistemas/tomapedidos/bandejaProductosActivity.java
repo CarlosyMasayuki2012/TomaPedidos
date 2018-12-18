@@ -6,10 +6,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +22,15 @@ import java.util.ArrayList;
 
 public class bandejaProductosActivity extends AppCompatActivity {
 
-    TextView tvcodigoproducto,tvnombreproducto;
+    TextView tvcodigoproducto,tvnombreproducto,tvtitulodinamico;
     Productos productos;
     Button btnbuscarproducto, btnterminar;
     ListView lvbandejaproductos;
     ArrayList<String> listabandejaproductos;
     Clientes cliente;
+    String cantidad ,Item ,Precio;
+    View mview;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +41,24 @@ public class bandejaProductosActivity extends AppCompatActivity {
         productos = (Productos) getIntent().getSerializableExtra("Producto");
         listabandejaproductos = new ArrayList<>();
 
+        cantidad = "1";
+
+        Item = "1.00";
+
+        Precio = "4.30";
+
         cliente = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
-        //Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, productos.getNombre(), Toast.LENGTH_SHORT).show();
+
         btnbuscarproducto =  findViewById(R.id.btnproducto);
         btnterminar = findViewById(R.id.btnterminar);
+        tvtitulodinamico  = findViewById(R.id.tvtitulodinamico);
+        mview = getLayoutInflater().inflate(R.layout.spiner_dialog,null);
+
+        String cadenaTituloAux = "Productos : "+ cantidad+"  |  Item : "+Item+"  |  Monto : S/. "+Precio+"";
+        tvtitulodinamico.setText(cadenaTituloAux);
         btnbuscarproducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +69,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 intent.putExtras(bundle1);
                 startActivity(intent);
                 finish();
-
             }
         });
         btnterminar.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +89,25 @@ public class bandejaProductosActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listabandejaproductos);
 
         lvbandejaproductos.setAdapter(adapter);
+
         lvbandejaproductos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
+                builder.setMessage("Menu")
+                        .setNegativeButton("Aceptar",null)
+                        .create()
+                        .show();
 
-
+                final Spinner mspinner = (Spinner)view.findViewById(R.id.spopciones);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(bandejaProductosActivity.this,android.R.layout.simple_list_item_1,
+                        getResources().getStringArray(R.array.opciones));
+                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mspinner.setAdapter(adapter1);
+                builder.setView(view);
                 return true;
+
             }
         });
 
@@ -87,12 +116,10 @@ public class bandejaProductosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
-
                 builder.setMessage("Codigo : "  + productos.getCodigo())
                         .setNegativeButton("Retry",null)
                         .create()
                         .show();
-
             }
         });
 
