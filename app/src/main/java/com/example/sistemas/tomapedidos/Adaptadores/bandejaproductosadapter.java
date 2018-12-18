@@ -22,6 +22,10 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
         this.listaProductos = listaProductos;
     }
 
+    public bandejaproductosadapter() {
+
+    }
+
     @NonNull
     @Override
     public bandejaproductosadapter.BandejaProductosHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

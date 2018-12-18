@@ -28,6 +28,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
     ListView lvclientes;
     ArrayList<String> listaCliente;
     EditText etcliente;
+    View mview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +53,12 @@ public class BusquedaClienteActivity extends AppCompatActivity {
             listaCliente.add(cliente.getNombre()+ '\r' + cliente.getDireccion());
         }
 
-        rggrupocliente = findViewById(R.id.rgBuscarCliente);
+        rggrupocliente = findViewById(R.id.rgBuscar);
         rbnombre = findViewById(R.id.rbNombre);
         rbcodigo = findViewById(R.id.rbCodigo);
         btnbuscar = findViewById(R.id.btnBuscar);
-        lvclientes = findViewById(R.id.lvClientes);
-        etcliente = findViewById(R.id.etcliente);
+        lvclientes = findViewById(R.id.lvCliente);
+        etcliente = findViewById(R.id.etCliente);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item,listaCliente);
 

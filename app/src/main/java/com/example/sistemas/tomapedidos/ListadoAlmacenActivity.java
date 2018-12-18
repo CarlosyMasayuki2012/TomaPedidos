@@ -24,19 +24,21 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_almacen);
 
-
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
-
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
         listaalmacen =  new ArrayList<>();
-
-        for (int i =0 ; i<10;i++){
-
-            listaalmacen.add("almacen " + i);
-        }
-
+        listaalmacen.add("T02");
+        listaalmacen.add("T04");
+        listaalmacen.add("T10");
+        listaalmacen.add("T11");
+        listaalmacen.add("T12");
+        listaalmacen.add("T14");
+        listaalmacen.add("CD1");
+        listaalmacen.add("CD2");
+        listaalmacen.add("CD3");
+        listaalmacen.add("CD4");
 
         lvAlmacenes = findViewById(R.id.lvAlmacenes);
 
@@ -55,8 +57,6 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
-
-
                 Toast.makeText(ListadoAlmacenActivity.this, listaalmacen.get(position), Toast.LENGTH_SHORT).show();
             }
         });

@@ -81,7 +81,6 @@ public class BuscarProductoActivity extends AppCompatActivity {
                 Intent intent =  new Intent(BuscarProductoActivity.this,DetalleProductoActivity.class);
                 Bundle bundle = new Bundle();
                 producto =  listaProductos.get(position);
-                Toast.makeText(BuscarProductoActivity.this, producto.getNombre(), Toast.LENGTH_SHORT).show();
                 bundle.putSerializable("Producto",producto);
                 intent.putExtras(bundle);
                 Bundle bundle1 = new Bundle();
