@@ -4,24 +4,73 @@ import java.io.Serializable;
 
 public class Productos implements Serializable {
 
-    private String Nombre;
+    private String Descripcion;
     private String Codigo;
     private String Stock;
     private String Precio;
     private String Cantidad;
     private String Flete;
+    private String IdProducto;
+    private String Marca;
+    private String Unidad;
+    private String Estado;
 
-    public Productos() {
-    }
 
-
-    public Productos(String nombre, String codigo, String stock, String precio, String cantidad, String flete) {
-        Nombre = nombre;
+    public Productos(String descripcion, String codigo, String stock, String precio, String cantidad,
+                     String flete, String idProducto, String marca, String unidad, String estado) {
+        Descripcion = descripcion;
         Codigo = codigo;
         Stock = stock;
         Precio = precio;
         Cantidad = cantidad;
         Flete = flete;
+        IdProducto = idProducto;
+        Marca = marca;
+        Unidad = unidad;
+        Estado = estado;
+    }
+
+    public Productos() {
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String estado) {
+        Estado = estado;
+    }
+
+    public String getIdProducto() {
+        return IdProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        IdProducto = idProducto;
+    }
+
+    public String getMarca() {
+        return Marca;
+    }
+
+    public void setMarca(String marca) {
+        Marca = marca;
+    }
+
+    public String getUnidad() {
+        return Unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        Unidad = unidad;
+    }
+
+    public String getDescripcion() {
+        return Descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        Descripcion = descripcion;
     }
 
     public String getFlete() {
@@ -56,13 +105,6 @@ public class Productos implements Serializable {
         Precio = precio;
     }
 
-    public String getNombre() {
-        return Nombre;
-    }
-
-    public void setNombre(String nombre) {
-        Nombre = nombre;
-    }
 
     public String getCodigo() {
         return Codigo;

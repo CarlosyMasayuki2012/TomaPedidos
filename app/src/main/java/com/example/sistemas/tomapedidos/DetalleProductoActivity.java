@@ -63,7 +63,7 @@ public class DetalleProductoActivity extends AppCompatActivity {
         });
 
          tvcodigoproducto.setText(productos.getCodigo());
-         tvnombreproducto.setText(productos.getNombre());
+         tvnombreproducto.setText(productos.getDescripcion());
 
     }
 }

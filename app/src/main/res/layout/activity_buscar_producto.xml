@@ -80,18 +80,11 @@
         app:layout_constraintVertical_bias="0.0">
         |
 
-        <ListView
-            android:id="@+id/lvProducto"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvListadoProducto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnBuscarProducto" />
-
-
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 

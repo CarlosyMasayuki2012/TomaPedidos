@@ -41,11 +41,8 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
         listaalmacen.add("CD4");
 
         lvAlmacenes = findViewById(R.id.lvAlmacenes);
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listaalmacen);
-
         lvAlmacenes.setAdapter(adapter);
-
         lvAlmacenes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

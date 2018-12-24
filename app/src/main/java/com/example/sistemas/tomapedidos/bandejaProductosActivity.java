@@ -80,7 +80,7 @@ public class bandejaProductosActivity extends AppCompatActivity {
             }
         });
 
-        detalle = productos.getCodigo() + "\n" + productos.getNombre() +"\n"+ "Cant : 1.00 " +"\n"+ "0.00" +"\n" +"Pre : S/. 3.50" +"\n"+"Subtotal : S/. 3.50";
+        detalle = productos.getCodigo() + "\n" + productos.getDescripcion() +"\n"+ "Cant : 1.00 " +"\n"+ "0.00" +"\n" +"Pre : S/. 3.50" +"\n"+"Subtotal : S/. 3.50";
         listabandejaproductos.add(detalle);
 
         lvbandejaproductos =  findViewById(R.id.lvbandejaProductos);
@@ -173,7 +173,7 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
                 builder.setMessage(
                         "Codigo     : "  + productos.getCodigo() + "\n" +
-                        "Nombre    : " + productos.getNombre()+ "\n"+
+                        "Nombre    : " + productos.getDescripcion()+ "\n"+
                         "Cantidad  : "+ productos.getCantidad()+ "\n"+
                         "Stock       : "+ productos.getStock()+ "\n"+
                         "Precio      : "+ productos.getPrecio()+"\n"+

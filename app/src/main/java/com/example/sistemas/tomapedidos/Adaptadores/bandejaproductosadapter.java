@@ -24,6 +24,8 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
 
     public bandejaproductosadapter() {
 
+
+
     }
 
     @NonNull
@@ -45,9 +47,9 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
     public void onBindViewHolder(@NonNull bandejaproductosadapter.BandejaProductosHolder bandejaProductosHolder, int i) {
 
 
-        String cadenaaux = listaProductos.get(i).getCodigo().toString()+" - "+ listaProductos.get(i).getNombre();
+        String cadenaaux = listaProductos.get(i).getCodigo();
         bandejaProductosHolder.tvNombreProductoBandeja.setText(cadenaaux);
-        bandejaProductosHolder.tvstockProductoBandeja.setText(listaProductos.get(i).getStock().toString());
+        bandejaProductosHolder.tvstockProductoBandeja.setText(listaProductos.get(i).getStock());
         bandejaProductosHolder.tvcantidadProductoBandeja.setText(listaProductos.get(i).getCantidad());
         bandejaProductosHolder.tvPrecioProdustoBandeja.setText(listaProductos.get(i).getPrecio());
         bandejaProductosHolder.tvFleteProductoBandeja.setText(listaProductos.get(i).getFlete());

@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
 
                 }else {
-
                     Toast.makeText(LoginActivity.this, "Nombre o oclave incorrecta", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -76,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
     public void verificarUsuario(){
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+
+        // se debe de colocar la url para la validacion del usuario
+
         url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=pkg_movil_funciones.fn_obtener_motivos_hruta&variables='9'";
 
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
