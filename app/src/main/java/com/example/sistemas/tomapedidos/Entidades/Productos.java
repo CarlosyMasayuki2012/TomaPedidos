@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Productos implements Serializable {
 
     private String Descripcion;
+    private String Nombre;
     private String Codigo;
     private String Stock;
     private String Precio;
@@ -15,10 +16,11 @@ public class Productos implements Serializable {
     private String Unidad;
     private String Estado;
 
-
-    public Productos(String descripcion, String codigo, String stock, String precio, String cantidad,
-                     String flete, String idProducto, String marca, String unidad, String estado) {
+    public Productos(String descripcion, String nombre, String codigo, String stock, String precio,
+                     String cantidad, String flete, String idProducto, String marca, String unidad,
+                     String estado) {
         Descripcion = descripcion;
+        Nombre = nombre;
         Codigo = codigo;
         Stock = stock;
         Precio = precio;
@@ -31,6 +33,14 @@ public class Productos implements Serializable {
     }
 
     public Productos() {
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String nombre) {
+        Nombre = nombre;
     }
 
     public String getEstado() {

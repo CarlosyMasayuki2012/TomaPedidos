@@ -14,7 +14,6 @@ public class MostrarClienteActivity extends AppCompatActivity {
 
     Button btnpedido;
     Clientes cliente;
-
     TextView tvcodigo,tvNombre,tvDireccion,tvGiro,tvTipoCiente,tvDeuda,tvestado,tvFechaUltPedido,
             tvUsuarioUltPedido;
 
