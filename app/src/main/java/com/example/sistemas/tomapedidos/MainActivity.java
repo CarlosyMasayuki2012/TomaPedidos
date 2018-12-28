@@ -41,11 +41,13 @@ public class MainActivity extends AppCompatActivity
 
         String cadenaAux = usuario.getCodigo()+ " - "+ usuario.getNombre()+" "+ usuario.getApellido();
         tvusuario.setText(cadenaAux);
-
         btnprimero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,BusquedaClienteActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Usuario",usuario);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }

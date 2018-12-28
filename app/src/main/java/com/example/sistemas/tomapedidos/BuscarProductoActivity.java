@@ -101,11 +101,12 @@ public class BuscarProductoActivity extends AppCompatActivity {
                 switch (rggrupoproducto.getCheckedRadioButtonId()){
 
                     case R.id.rbNombreProducto:
+                        etproducto.setInputType(1);  // envia el tipo de teclado de tipo alfanumerico
 
-                        etproducto.setInputType(1);
                         break;
                     case R.id.rbCodigoProducto:
-                        etproducto.setInputType(2);
+                        etproducto.setInputType(2);   // envia el teclado de tipo numerico
+
                         break;
                 }
 

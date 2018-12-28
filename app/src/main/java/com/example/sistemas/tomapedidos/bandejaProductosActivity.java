@@ -46,9 +46,9 @@ public class bandejaProductosActivity extends AppCompatActivity {
 
         // valores para el sumarizado de la bandeja
 
-        cantidad = "1";
-        Item = "1.00";
-        Precio = "4.30";
+        cantidad = "0";
+        Item = "0.00";
+        Precio = "0.00";
 
         cliente = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");

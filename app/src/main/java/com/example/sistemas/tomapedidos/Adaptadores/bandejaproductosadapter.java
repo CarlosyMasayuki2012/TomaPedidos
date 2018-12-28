@@ -22,11 +22,6 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
         this.listaProductos = listaProductos;
     }
 
-    public bandejaproductosadapter() {
-
-
-
-    }
 
     @NonNull
     @Override

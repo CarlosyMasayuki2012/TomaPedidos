@@ -42,19 +42,25 @@ public class LoginActivity extends AppCompatActivity {
         btnlogeo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 usuario.setNombre(etusuario.getText().toString().replace(" ",""));
                 usuario.setClave(etclave.getText().toString().replace(" ",""));
                 // Se recibe los parametros
                 usuario.setNombre("Carlos");
                 usuario.setApellido("Miyashiro");
                 usuario.setCodigo("001");
+                // metodo para hacer la verificacion mediante in llamado a la webservice
 
-                Toast.makeText(getApplicationContext(), etusuario.getText().toString(), Toast.LENGTH_SHORT).show();
+                /*
 
-                //verificarUsuario(); // metodo para hacer la verificacion mediante in llamado a la webservice
+                if (usuario.getUsuario().equals("") && usuario.getClave().equals("")){
+
+                }else{
+                    verificarUsuario();
+                }
 
                 // Se hace la verificacion en duro
+
+                */
 
                 if(usuario.getNombre().equals("Carlos")&& usuario.getClave().equals("12345")){
                     Toast.makeText(LoginActivity.this, "Entro", Toast.LENGTH_SHORT).show();
@@ -64,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
-
                 }else {
                     Toast.makeText(LoginActivity.this, "Nombre o oclave incorrecta", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -88,25 +94,28 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject=new JSONObject(response1);
                             boolean success = jsonObject.getBoolean("success");
-
                             if (success){
                                 JSONArray jsonArray = jsonObject.getJSONArray("hojaruta");
 
                                 for(int i=0;i<jsonArray.length();i++) {
-
                                     jsonObject = jsonArray.getJSONObject(i);
 
                                 }
 
-                            }else{
+                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("Usuario",usuario);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
 
+                            }else{
                                 AlertDialog.Builder build1 = new AlertDialog.Builder(LoginActivity.this);
                                 build1.setTitle("No se encontro el usuario")
                                         .setNegativeButton("Regresar",null)
                                         .create()
                                         .show();
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

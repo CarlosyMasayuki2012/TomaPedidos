@@ -51,6 +51,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
         listaClientes = new ArrayList<>();
         listaCliente  =new ArrayList<>();
 
+        /*
         for (int i=0; i<5;i++){
 
             cliente = new Clientes();
@@ -66,6 +67,8 @@ public class BusquedaClienteActivity extends AppCompatActivity {
             listaClientes.add(cliente);
             listaCliente.add(cliente.getNombre()+ '\r' + cliente.getDireccion());
         }
+        */
+
         rggrupocliente = findViewById(R.id.rgBuscar);
         rbnombre = findViewById(R.id.rbNombre);
         rbcodigo = findViewById(R.id.rbCodigo);
@@ -75,11 +78,10 @@ public class BusquedaClienteActivity extends AppCompatActivity {
 
         if (etcliente.equals(""))
         {
-            Toast.makeText(this, "Se ha ingresado  un valor nullo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Se ha ingresado  un valor nulo", Toast.LENGTH_SHORT).show();
 
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item,listaCliente);
 
         btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +90,10 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                 if (etcliente.getText().toString().equals(""))
                 {
 
-                    Toast.makeText(BusquedaClienteActivity.this, "Por favor ingrese un valor valido en el EditText", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusquedaClienteActivity.this, "Por favor ingrese un valor valido ", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(BusquedaClienteActivity.this);
 
                 }else {
-                    lvclientes.setAdapter(adapter);
                     buscarCliente(etcliente.getText().toString(),tipoConsulta);
                 }
             }
@@ -120,10 +121,11 @@ public class BusquedaClienteActivity extends AppCompatActivity {
 
                     case R.id.rbNombre:
                         etcliente.setInputType(1);
+                        tipoConsulta = "Nombre";
                         break;
                     case R.id.rbCodigo:
                         etcliente.setInputType(2);
-                        tipoConsulta = "ruc";
+                        tipoConsulta = "Codigo";
                         break;
                 }
             }
@@ -133,8 +135,8 @@ public class BusquedaClienteActivity extends AppCompatActivity {
     private void buscarCliente(String numero, String tipoConsulta) {
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+
         url =  "http://mydsystems.com/pruebaDaniel/ConsultaCliente.php?ruc='"+numero+"'&tipobusqueda=" + tipoConsulta;
-        Toast.makeText(this, url, Toast.LENGTH_LONG).show();
 
         listaCliente = new ArrayList<>();
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
@@ -142,7 +144,8 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Toast.makeText(BusquedaClienteActivity.this, response, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BusquedaClienteActivity.this, response,
+                                    Toast.LENGTH_SHORT).show();
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("cliente");
@@ -154,17 +157,30 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                                     cliente.setCodCliente(jsonObject.getString("CodCliente"));
                                     cliente.setNombre(jsonObject.getString("Nombre"));
                                     cliente.setDireccion(jsonObject.getString("Direccion"));
-                                    cliente.setGiro(jsonObject.getString(jsonObject.getString("Giro")));
-                                    cliente.setTipoCliente(jsonObject.getString(jsonObject.getString("TipoCliente")));
-                                    cliente.setEstado(jsonObject.getString(jsonObject.getString("Estado")));
-                                    cliente.setFechaultpedido(jsonObject.getString(jsonObject.getString("Fechaultpedido")));
-                                    cliente.setUsuarioultpedido(jsonObject.getString(jsonObject.getString("Usuarioultpedido")));
-                                    Toast.makeText(BusquedaClienteActivity.this, cliente.getEstado().toString(), Toast.LENGTH_SHORT).show();
+                                    cliente.setGiro(jsonObject.getString("Giro"));
+                                    cliente.setTipoCliente(jsonObject.getString("TipoCliente"));
+                                    cliente.setEstado(jsonObject.getString("Estado"));
+                                    cliente.setFechaultpedido(jsonObject.getString("Fechaultpedido"));
+                                    cliente.setUsuarioultpedido(jsonObject.getString("Usuarioultpedido"));
                                     listaClientes.add(cliente);
+                                    listaCliente.add(cliente.getNombre()+ '\n' + cliente.getDireccion());
+
                                 }
+                                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext()
+                                        , R.layout.support_simple_spinner_dropdown_item,listaCliente);
+                                lvclientes.setAdapter(adapter);
+
                             }else {
+                                listaCliente.clear();
+                                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext()
+                                        , R.layout.support_simple_spinner_dropdown_item,listaCliente);
+                                lvclientes.setAdapter(adapter);
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(BusquedaClienteActivity.this);
-                                builder.setMessage("No se llego a encontrar el registro");
+                                builder.setMessage("No se llego a encontrar el registro")
+                                        .setNegativeButton("Aceptar",null)
+                                        .create()
+                                        .show();
                             }
 
                         } catch (JSONException e) {
