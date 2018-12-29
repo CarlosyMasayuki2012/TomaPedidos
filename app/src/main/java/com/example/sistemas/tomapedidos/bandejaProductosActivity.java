@@ -105,7 +105,7 @@ public class bandejaProductosActivity extends AppCompatActivity {
 
         lvbandejaproductos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
                 builder.setCancelable(true);
@@ -118,57 +118,27 @@ public class bandejaProductosActivity extends AppCompatActivity {
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                         String msg = "";
-                        switch (position){
+                        switch (i){
 
                             case 0:
-                                msg = "Editar el prducto";
+                                Alertsdialog("Editar el prducto");
+                                Toast.makeText(bandejaProductosActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
                             break;
 
                             case 1:
-                                msg = "Borrar el producto";
+                                listaproductoselegidos.remove(position);
+
+                                Alertsdialog("Borrar el producto");
+
                             break;
 
                             case 2:
+                                Alertsdialog("Cancelar");
 
                             break; }
 
-                        if(position == 0 || position ==1) {
-
-                            final AlertDialog.Builder builder1 = new AlertDialog.Builder(
-                                    bandejaProductosActivity.this);
-                            builder1.setMessage("Esta seguro que desea " + msg + "?")
-                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                                            dialogInterface.cancel();
-                                            salirlistview();
-
-
-                                        }
-                                    })
-                                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                            salirlistview();
-
-
-                                            /*
-                                            Intent intent = new Intent(bandejaProductosActivity.this, bandejaProductosActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putSerializable("Producto", productos);
-                                            intent.putExtras(bundle);
-                                            startActivity(intent);
-                                            finish();
-                                            */
-                                        }
-                                    })
-                                    .create()
-                                    .show();
-                        }
                     }
                 });
 
@@ -217,9 +187,29 @@ public class bandejaProductosActivity extends AppCompatActivity {
         finish();
 
     }
-    private void Alertsdialog(){
+    private void Alertsdialog(String msg){
 
+        final AlertDialog.Builder builder1 = new AlertDialog.Builder(
+                bandejaProductosActivity.this);
+        builder1.setMessage("Esta seguro que desea " + msg + "?")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                        dialogInterface.cancel();
+                        salirlistview();
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        salirlistview();
+
+                    }
+                })
+                .create()
+                .show();
 
 
 

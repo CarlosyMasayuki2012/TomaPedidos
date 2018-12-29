@@ -1,5 +1,6 @@
 package com.example.sistemas.tomapedidos;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class BuscarProductoActivity extends AppCompatActivity {
     Clientes cliente;
     EditText etproducto;
     String url,Tipobusqueda;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,12 @@ public class BuscarProductoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //lvProducto.setAdapter(adapter);
+                btnbuscarProducto.setVisibility(View.GONE);
+                progressDialog = new ProgressDialog(BuscarProductoActivity.this);
+                progressDialog.setMessage("Cargando...");
+                progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
+                progressDialog.show();
+
                 buscarproducto(etproducto.getText().toString(),Tipobusqueda);
 
             }
@@ -101,6 +109,9 @@ public class BuscarProductoActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         rggrupoproducto.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -128,6 +139,8 @@ public class BuscarProductoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
+                        progressDialog.dismiss();
+                        btnbuscarProducto.setVisibility(View.VISIBLE);
                         try {
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
@@ -147,7 +160,7 @@ public class BuscarProductoActivity extends AppCompatActivity {
                                     producto.setEstado(jsonObject.getString("Estado"));
                                     listaProductos.add(producto);
                                     listaProducto.add(producto.getCodigo()+ " - " + producto.getDescripcion());
-                                    Toast.makeText(BuscarProductoActivity.this, listaProducto.get(0), Toast.LENGTH_SHORT).show();
+
                                 }
                                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext()
                                         , R.layout.support_simple_spinner_dropdown_item,listaProducto);
