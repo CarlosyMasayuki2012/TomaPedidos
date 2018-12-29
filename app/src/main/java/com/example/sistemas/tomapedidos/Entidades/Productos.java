@@ -15,10 +15,11 @@ public class Productos implements Serializable {
     private String Marca;
     private String Unidad;
     private String Estado;
+    private String PrecioAcumulado;
 
     public Productos(String descripcion, String nombre, String codigo, String stock, String precio,
                      String cantidad, String flete, String idProducto, String marca, String unidad,
-                     String estado) {
+                     String estado, String precioAcumulado) {
         Descripcion = descripcion;
         Nombre = nombre;
         Codigo = codigo;
@@ -30,14 +31,17 @@ public class Productos implements Serializable {
         Marca = marca;
         Unidad = unidad;
         Estado = estado;
+        PrecioAcumulado = precioAcumulado;
     }
 
     public Productos() {
     }
 
-    public String getNombre() {
-        return Nombre;
-    }
+    public String getNombre() { return Nombre; }
+
+    public String getPrecioAcumulado() { return PrecioAcumulado; }
+
+    public void setPrecioAcumulado(String precioAcumulado) { PrecioAcumulado = precioAcumulado; }
 
     public void setNombre(String nombre) {
         Nombre = nombre;
@@ -114,7 +118,6 @@ public class Productos implements Serializable {
     public void setPrecio(String precio) {
         Precio = precio;
     }
-
 
     public String getCodigo() {
         return Codigo;

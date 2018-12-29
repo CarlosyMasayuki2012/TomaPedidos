@@ -12,7 +12,8 @@ import com.example.sistemas.tomapedidos.R;
 
 import java.util.List;
 
-public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproductosadapter.BandejaProductosHolder> implements  View.OnClickListener{
+public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproductosadapter.
+        BandejaProductosHolder> implements  View.OnClickListener{
 
     List<Productos> listaProductos;
 

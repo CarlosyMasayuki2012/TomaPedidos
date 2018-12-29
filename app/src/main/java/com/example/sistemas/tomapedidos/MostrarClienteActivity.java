@@ -26,17 +26,17 @@ public class MostrarClienteActivity extends AppCompatActivity {
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
 
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
-        tvcodigo = findViewById(R.id.tvcodigoproducto);
+        tvcodigo = findViewById(R.id.tvcodigoCliente);
         tvNombre = findViewById(R.id.tvNombreCliente);
         tvDireccion = findViewById(R.id.tvDireccion);
-        tvGiro = findViewById(R.id.tvnombreProducto);
+        tvGiro = findViewById(R.id.tvGiroCliente);
         tvTipoCiente = findViewById(R.id.tvTipoCliente);
         tvDeuda = findViewById(R.id.tvDeuda);
         tvestado = findViewById(R.id.tvEstado);
         tvFechaUltPedido = findViewById(R.id.tvfechaultregistro);
         tvUsuarioUltPedido = findViewById(R.id.tvUsuarioUltPedido);
 
-        tvcodigo.setText(cliente.getIdCliente());
+        tvcodigo.setText(cliente.getCodCliente());
         tvNombre.setText(cliente.getNombre());
         tvDireccion.setText(cliente.getDireccion());
         tvGiro.setText(cliente.getGiro());

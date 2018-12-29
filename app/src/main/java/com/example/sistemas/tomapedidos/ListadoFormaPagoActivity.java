@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
+import com.example.sistemas.tomapedidos.Entidades.Productos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,15 +30,17 @@ import java.util.ArrayList;
 public class ListadoFormaPagoActivity extends AppCompatActivity {
 
     ListView lvtipopago;
-    ArrayList<String> listatipopago;
+    ArrayList<String> listatipopago,listaAux;
     Clientes cliente;
     String url;
+    ArrayList<Productos> listaproductoselegidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_forma_pago);
 
+        listaproductoselegidos = new ArrayList<>();
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
 
@@ -54,7 +57,8 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
 
         lvtipopago = findViewById(R.id.lvtipopago);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listatipopago);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.
+                support_simple_spinner_dropdown_item,listatipopago);
 
         lvtipopago.setAdapter(adapter);
         lvtipopago.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +70,9 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtras(bundle);
                 intent.putExtra("TipoPago",listatipopago.get(position));
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
+                intent.putExtras(bundle1);
                 startActivity(intent);
                 finish();
             }
@@ -75,7 +82,7 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
     private void Consultartipopago() {
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
-        url =  "#";
+        url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=PKG_WEB_HERRAMIENTAS.SP_WS_FPAGOS";
         listatipopago = new ArrayList<>();
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
                 new Response.Listener<String>() {
@@ -85,13 +92,38 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                             Toast.makeText(ListadoFormaPagoActivity.this, response, Toast.LENGTH_SHORT).show();
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("formapago");
+                            JSONArray jsonArray = jsonObject.getJSONArray("hojaruta");
 
                             if (success){
                                 for(int i=0;i<jsonArray.length();i++) {
                                     jsonObject = jsonArray.getJSONObject(i);
-                                    listatipopago.add(jsonObject.getString("TipoPago"));
+                                    String listado = jsonObject.getString("COD_FPAGO")+ " - "
+                                            + jsonObject.getString("DESCRIPCION");
+                                    listatipopago.add(listado);
+                                    listaAux.add(jsonObject.getString("COD_FPAGO"));
+
                                 }
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.
+                                        support_simple_spinner_dropdown_item,listatipopago);
+
+                                lvtipopago.setAdapter(adapter);
+                                lvtipopago.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                        Intent intent =  new Intent(ListadoFormaPagoActivity.this,BuscarProductoActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("Cliente",cliente);
+                                        intent.putExtras(bundle);
+                                        intent.putExtra("TipoPago",listaAux.get(position));
+                                        Bundle bundle1 = new Bundle();
+                                        bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
+                                        intent.putExtras(bundle1);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
                             }else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ListadoFormaPagoActivity.this);
                                 builder.setMessage("No se pudo encontrar los tipos de pago correspondientes");

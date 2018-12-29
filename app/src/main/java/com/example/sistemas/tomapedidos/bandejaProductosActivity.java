@@ -24,31 +24,43 @@ import java.util.ArrayList;
 
 public class bandejaProductosActivity extends AppCompatActivity {
 
-    TextView tvcodigoproducto,tvnombreproducto,tvtitulodinamico;
+    TextView tvtitulodinamico;
     Productos productos;
     Button btnbuscarproducto, btnterminar;
     ListView lvbandejaproductos;
-    ArrayList<String> listabandejaproductos;
+    ArrayList<String> listabandejaproductos,listabandejaproductoselegidos;
     Clientes cliente;
-    String cantidad ,Item ,Precio,detalle;
+    String cantidad ,Item ,Precio;
     View mview;
     Integer cantidadProductos=0;
+    ArrayList<Productos> listaproductoselegidos;
+    Double precio = 0.0,item=0.0,precioinicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bandeja_productos);
 
-        productos  = new Productos();
-        productos = (Productos) getIntent().getSerializableExtra("Producto");
+        listaproductoselegidos = new ArrayList<Productos>();
+        listaproductoselegidos = (ArrayList<Productos>) getIntent().getSerializableExtra("listaProductoselegidos");
         listabandejaproductos = new ArrayList<>();
         cantidadProductos = listabandejaproductos.size();
+        listabandejaproductoselegidos = new ArrayList<>();
 
         // valores para el sumarizado de la bandeja
 
-        cantidad = "0";
-        Item = "0.00";
-        Precio = "0.00";
+        precioinicial = Double.valueOf(listaproductoselegidos.get(0).getPrecio());
+        for (int i=0;i<listaproductoselegidos.size();i++){
+           // calcula numero de productos
+            precio = precio + Double.valueOf(listaproductoselegidos.get(i).getPrecioAcumulado());
+            item = item + Double.valueOf(listaproductoselegidos.get(i).getCantidad());
+            listabandejaproductoselegidos.add(listaproductoselegidos.get(i).getCodigo().toString());
+
+        }
+
+        cantidad = String.valueOf(listaproductoselegidos.size());
+        Item = String.valueOf(item);
+        Precio = String.valueOf(precio);
 
         cliente = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
@@ -64,8 +76,11 @@ public class bandejaProductosActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(bandejaProductosActivity.this,BuscarProductoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Cliente",cliente);
+                intent.putExtras(bundle);
                 Bundle bundle1 = new Bundle();
-                bundle1.putSerializable("Cliente",cliente);
+                bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
                 intent.putExtras(bundle1);
                 startActivity(intent);
                 finish();
@@ -80,13 +95,11 @@ public class bandejaProductosActivity extends AppCompatActivity {
             }
         });
 
-        detalle = productos.getCodigo() + "\n" + productos.getDescripcion() +"\n"+ "Cant : 1.00 " +"\n"+ "0.00" +"\n" +"Pre : S/. 3.50" +"\n"+"Subtotal : S/. 3.50";
-        listabandejaproductos.add(detalle);
+      //  listabandejaproductos.add(detalle);
 
         lvbandejaproductos =  findViewById(R.id.lvbandejaProductos);
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listabandejaproductos);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listabandejaproductoselegidos);
 
         lvbandejaproductos.setAdapter(adapter);
 
@@ -118,12 +131,7 @@ public class bandejaProductosActivity extends AppCompatActivity {
                             break;
 
                             case 2:
-                                Intent intent = new Intent(bandejaProductosActivity.this,bandejaProductosActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("Producto",productos);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                                finish();
+
                             break; }
 
                         if(position == 0 || position ==1) {
@@ -135,20 +143,27 @@ public class bandejaProductosActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                                            Toast.makeText(bandejaProductosActivity.this, "Se ejecutó la opcion", Toast.LENGTH_SHORT).show();
+                                            dialogInterface.cancel();
+                                            salirlistview();
+
 
                                         }
                                     })
                                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
+                                            dialog.cancel();
+                                            salirlistview();
+
+
+                                            /*
                                             Intent intent = new Intent(bandejaProductosActivity.this, bandejaProductosActivity.class);
                                             Bundle bundle = new Bundle();
                                             bundle.putSerializable("Producto", productos);
                                             intent.putExtras(bundle);
                                             startActivity(intent);
                                             finish();
+                                            */
                                         }
                                     })
                                     .create()
@@ -170,18 +185,43 @@ public class bandejaProductosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
                 builder.setMessage(
-                        "Codigo     : "  + productos.getCodigo() + "\n" +
-                        "Nombre    : " + productos.getDescripcion()+ "\n"+
-                        "Cantidad  : "+ productos.getCantidad()+ "\n"+
-                        "Stock       : "+ productos.getStock()+ "\n"+
-                        "Precio      : "+ productos.getPrecio()+"\n"+
-                        "Flete       : " + productos.getFlete())
+                        "Codigo     : "  + listaproductoselegidos.get(position).getCodigo() + "\n" +
+                        "Nombre    : " + listaproductoselegidos.get(position).getDescripcion()+ "\n"+
+                        "Cantidad  : "+ listaproductoselegidos.get(position).getCantidad()+ "\n"+
+                        "Stock       : "+ listaproductoselegidos.get(position).getStock()+ "\n"+
+                        "Precio      : "+ listaproductoselegidos.get(position).getPrecio()+"\n"+
+                        "Flete       : " + listaproductoselegidos.get(position).getFlete())
                         .setNegativeButton("Aceptar",null)
                         .create()
                         .show();
+
+
+                Toast.makeText(bandejaProductosActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+
             }
         });
+    }
+    private void salirlistview (){
+
+        Intent intent = new Intent(bandejaProductosActivity.this, bandejaProductosActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Producto", productos);
+        intent.putExtras(bundle);
+        Bundle bundle1 = new Bundle();
+        bundle1.putSerializable("listaProductoselegidos", listaproductoselegidos);
+        intent.putExtras(bundle1);
+        startActivity(intent);
+        finish();
+
+    }
+    private void Alertsdialog(){
+
+
+
+
+
     }
 }

@@ -17,6 +17,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sistemas.tomapedidos.Entidades.Clientes;
 import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
 import org.json.JSONArray;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 usuario.setNombre("Carlos");
                 usuario.setApellido("Miyashiro");
                 usuario.setCodigo("001");
+
                 // metodo para hacer la verificacion mediante in llamado a la webservice
 
                 /*
@@ -78,13 +80,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void verificarUsuario(){
+    public void verificarUsuario(String Codigo_usuario,String Contraseña_usuario){
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
 
         // se debe de colocar la url para la validacion del usuario
 
-        url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=pkg_movil_funciones.fn_obtener_motivos_hruta&variables='9'";
+        //url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=pkg_movil_funciones.fn_obtener_motivos_hruta&variables='9'";
+        url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=" +
+                "PKG_WEB_HERRAMIENTAS.SP_WS_LOGIN&variables='7|"+Codigo_usuario+"|"+Contraseña_usuario+"|TH001'";
 
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
                 new Response.Listener<String>() {
@@ -98,6 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONArray jsonArray = jsonObject.getJSONArray("hojaruta");
 
                                 for(int i=0;i<jsonArray.length();i++) {
+
+                                    usuario = new Usuario();
+                                    jsonObject = jsonArray.getJSONObject(i);
+                                    usuario.setCodigo(jsonObject.getString("CodCliente"));
+                                    usuario.setNombre(jsonObject.getString("Nombre"));
+                                    usuario.setApellido(jsonObject.getString("Apellidos"));
+                                    usuario.setUsuario(jsonObject.getString("Usuario"));
+
                                     jsonObject = jsonArray.getJSONObject(i);
 
                                 }
@@ -111,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             }else{
                                 AlertDialog.Builder build1 = new AlertDialog.Builder(LoginActivity.this);
-                                build1.setTitle("No se encontro el usuario")
+                                build1.setTitle("Usuario  o Clave incorrecta")
                                         .setNegativeButton("Regresar",null)
                                         .create()
                                         .show();
