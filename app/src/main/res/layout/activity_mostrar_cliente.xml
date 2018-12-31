@@ -109,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/tvcodigoCliente"
+        android:id="@+id/tvCofigoProducto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
 
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/tvGiroCliente"
+        android:id="@+id/tvNombreProducto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -142,7 +142,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
 
     <TextView
-        android:id="@+id/tvTipoCliente"
+        android:id="@+id/tvAlmacenProducto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
 
@@ -150,10 +150,10 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGiroCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreProducto" />
 
     <TextView
-        android:id="@+id/tvDeuda"
+        android:id="@+id/tvStock"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -161,10 +161,10 @@
         android:textAlignment="textEnd"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTipoCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAlmacenProducto" />
 
     <TextView
-        android:id="@+id/tvEstado"
+        android:id="@+id/tvPrecio"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -172,10 +172,10 @@
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeuda" />
+        app:layout_constraintTop_toBottomOf="@+id/tvStock" />
 
     <TextView
-        android:id="@+id/tvfechaultregistro"
+        android:id="@+id/tvSubtotal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -183,10 +183,10 @@
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEstado" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
 
     <TextView
-        android:id="@+id/tvUsuarioUltPedido"
+        android:id="@+id/tvTotal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -194,7 +194,7 @@
         android:textAlignment="textEnd"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvfechaultregistro" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtotal" />
 
     <TextView
         android:id="@+id/textView15"

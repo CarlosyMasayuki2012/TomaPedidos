@@ -9,7 +9,7 @@
     tools:context=".DetalleProductoActivity">
 
     <TextView
-        android:id="@+id/tvUsuarioUltPedido2"
+        android:id="@+id/tvObservacionProducto"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
@@ -124,7 +124,7 @@
         android:text="Guardar y Revisar"
         android:textColor="#fff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsuarioUltPedido2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvObservacionProducto" />
 
     <Button
         android:id="@+id/btnGuardaryagregar"
@@ -136,10 +136,10 @@
         android:text="Guardar y agregar"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsuarioUltPedido2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvObservacionProducto" />
 
     <TextView
-        android:id="@+id/tvcodigoCliente"
+        android:id="@+id/tvCofigoProducto"
         android:layout_width="220dp"
         android:layout_height="19dp"
         android:layout_marginTop="8dp"
@@ -150,7 +150,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/tvcodigoCliente"
+        android:id="@+id/tvCofigoProducto"
         android:layout_width="220dp"
         android:layout_height="51dp"
         android:layout_marginTop="5dp"
@@ -158,7 +158,7 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvcodigoCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCofigoProducto" />
 
     <TextView
         android:id="@+id/tvDireccion"
@@ -169,10 +169,10 @@
         android:textAlignment="textEnd"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvcodigoCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCofigoProducto" />
 
     <TextView
-        android:id="@+id/tvGiroCliente"
+        android:id="@+id/tvNombreProducto"
         android:layout_width="220dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
@@ -183,7 +183,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/tvTipoCliente"
+        android:id="@+id/tvAlmacenProducto"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
 
@@ -192,10 +192,10 @@
         android:text="Almacen N° 01"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGiroCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreProducto" />
 
     <TextView
-        android:id="@+id/tvDeuda"
+        android:id="@+id/tvStock"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -204,10 +204,10 @@
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTipoCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAlmacenProducto" />
 
     <TextView
-        android:id="@+id/tvEstado"
+        android:id="@+id/tvPrecio"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -216,10 +216,10 @@
         android:text="13.50"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeuda" />
+        app:layout_constraintTop_toBottomOf="@+id/tvStock" />
 
     <TextView
-        android:id="@+id/tvfechaultregistro"
+        android:id="@+id/tvSubtotal"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -228,10 +228,10 @@
         android:text="125.12"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEstado" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
 
     <TextView
-        android:id="@+id/tvUsuarioUltPedido"
+        android:id="@+id/tvTotal"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -240,7 +240,7 @@
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvfechaultregistro" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtotal" />
 
     <TextView
         android:id="@+id/textView16"
@@ -263,7 +263,7 @@
         android:inputType="textPersonName|numberDecimal"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsuarioUltPedido" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
 
 
 </android.support.constraint.ConstraintLayout>

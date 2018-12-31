@@ -54,14 +54,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 /*
 
-                if (usuario.getUsuario().equals("") && usuario.getClave().equals("")){
+                if (usuario.getUsuario().equals("") || usuario.getClave().equals("")){
 
                 }else{
                     verificarUsuario();
                 }
-
-                // Se hace la verificacion en duro
-
                 */
 
                 if(usuario.getNombre().equals("Carlos")&& usuario.getClave().equals("12345")){
@@ -84,11 +81,8 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
 
-        // se debe de colocar la url para la validacion del usuario
-
-        //url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=pkg_movil_funciones.fn_obtener_motivos_hruta&variables='9'";
         url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=" +
-                "PKG_WEB_HERRAMIENTAS.SP_WS_LOGIN&variables='7|"+Codigo_usuario+"|"+Contraseña_usuario+"|TH001'";
+                "PKG_WEB_HERRAMIENTAS.SP_WS_LOGIN&variables='7|"+Codigo_usuario+"|"+Contraseña_usuario+"|TH001'"; // se debe actalizar la URL
 
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
                 new Response.Listener<String>() {
@@ -110,8 +104,11 @@ public class LoginActivity extends AppCompatActivity {
                                     usuario.setApellido(jsonObject.getString("Apellidos"));
                                     usuario.setUsuario(jsonObject.getString("Usuario"));
 
-                                    jsonObject = jsonArray.getJSONObject(i);
-
+                                    // Nuevos campos que se tienen que realizar
+                                    /*
+                                    usuario.setAlmacen(jsonObject.getString("Almacen"));
+                                    usuario.setMoneda(jsonObject.getString("Moneda"));
+                                    */
                                 }
 
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);

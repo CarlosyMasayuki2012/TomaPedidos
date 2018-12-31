@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
     ListView lvAlmacenes;
     ArrayList<String> listaalmacen;
     Clientes cliente;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
 
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
         listaalmacen =  new ArrayList<>();
@@ -51,6 +54,9 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtra("Almacen",listaalmacen.get(position));
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("Usuario",usuario);
+                intent.putExtras(bundle1);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();

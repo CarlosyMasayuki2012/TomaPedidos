@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
+import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
     EditText etcliente;
     String url, tipoConsulta;
     ProgressDialog progressDialog;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
         btnbuscar = findViewById(R.id.btnBuscar);
         lvclientes = findViewById(R.id.lvCliente);
         etcliente = findViewById(R.id.etCliente);
+        usuario = (Usuario) getIntent().getSerializableExtra("Usuario");  //Se pasa el parametro del usuario
 
         btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +89,9 @@ public class BusquedaClienteActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             cliente =  listaClientes.get(position);
             bundle.putSerializable("Cliente",cliente);
+            Bundle bundle1 = new Bundle();
+            bundle1.putSerializable("Usuario",usuario);
+            intent.putExtras(bundle1);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -116,6 +122,17 @@ public class BusquedaClienteActivity extends AppCompatActivity {
 
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         url =  "http://mydsystems.com/pruebaDaniel/ConsultaCliente.php?ruc='"+numero+"'&tipobusqueda=" + tipoConsulta;
+        /*  la Url del servicio Web // Se hace la validacion del tipo de consulta
+        if (tipoConsulta == "Nombre"){
+
+            url = "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=" +
+                    "PKG_WEB_HERRAMIENTAS.SP_WS_CONSULTAR_CLIENTE&variables="+numero+"||";
+        }else {
+
+            url = "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=" +
+                    "PKG_WEB_HERRAMIENTAS.SP_WS_CONSULTAR_CLIENTE&variables=||"+numero;
+        }
+       */
         listaCliente = new ArrayList<>();
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
                 new Response.Listener<String>() {
@@ -123,6 +140,7 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             progressDialog.dismiss();
+                            Toast.makeText(BusquedaClienteActivity.this, response, Toast.LENGTH_SHORT).show();
                             btnbuscar.setVisibility(View.VISIBLE);
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");

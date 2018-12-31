@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
 import com.example.sistemas.tomapedidos.Entidades.Productos;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
     Clientes cliente;
     String url;
     ArrayList<Productos> listaproductoselegidos;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
         listaproductoselegidos = new ArrayList<>();
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
 
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
@@ -73,6 +76,9 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
                 intent.putExtras(bundle1);
+                Bundle bundle2 = new Bundle();
+                bundle2.putSerializable("Usuario",usuario);
+                intent.putExtras(bundle2);
                 startActivity(intent);
                 finish();
             }
@@ -120,6 +126,9 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                                         Bundle bundle1 = new Bundle();
                                         bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
                                         intent.putExtras(bundle1);
+                                        Bundle bundle2 = new Bundle();
+                                        bundle1.putSerializable("Usuario",usuario);
+                                        intent.putExtras(bundle2);
                                         startActivity(intent);
                                         finish();
                                     }

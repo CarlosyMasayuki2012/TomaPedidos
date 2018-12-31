@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
 import com.example.sistemas.tomapedidos.Entidades.Productos;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,8 +44,10 @@ public class BuscarProductoActivity extends AppCompatActivity {
     ArrayList<String> listaProducto;
     Clientes cliente;
     EditText etproducto;
-    String url,Tipobusqueda;
+    String url,Tipobusqueda,tipoPago;
     ProgressDialog progressDialog;
+    Usuario usuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class BuscarProductoActivity extends AppCompatActivity {
 
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
+        tipoPago = (String)getIntent().getStringExtra("TipoPago");
 
        // Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
@@ -82,6 +87,12 @@ public class BuscarProductoActivity extends AppCompatActivity {
 
                 buscarproducto(etproducto.getText().toString(),Tipobusqueda);
 
+                // Se hace la busqueda desde el WS de Taiheng
+/*
+                grabarpedidoWS(etproducto.getText().toString(),tipoPago,usuario.getAlmacen().
+                        toString(),cliente.getCodCliente().toString(),Cantidad);
+
+*/
             }
         });
 
@@ -103,14 +114,13 @@ public class BuscarProductoActivity extends AppCompatActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putSerializable("listaproductoselegidos",listaproductoselegidos);
                 intent.putExtras(bundle2);
+                Bundle bundle3 = new Bundle();
+                bundle3.putSerializable("Usuario",usuario);
+                intent.putExtras(bundle3);
                 startActivity(intent);
                 finish();
-
             }
         });
-
-
-
 
         rggrupoproducto.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -191,5 +201,9 @@ public class BuscarProductoActivity extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
     }
+
+
+
+
 
 }

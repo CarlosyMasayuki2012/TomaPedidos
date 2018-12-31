@@ -4,127 +4,139 @@ import java.io.Serializable;
 
 public class Productos implements Serializable {
 
-    private String Descripcion;
-    private String Nombre;
-    private String Codigo;
-    private String Stock;
-    private String Precio;
-    private String Cantidad;
-    private String Flete;
-    private String IdProducto;
-    private String Marca;
-    private String Unidad;
-    private String Estado;
-    private String PrecioAcumulado;
+    private String descripcion;
+    private String nombre;
+    private String codigo;
+    private String stock;
+    private String precio;
+    private String cantidad;
+    private String flete;
+    private String idProducto;
+    private String marca;
+    private String unidad;
+    private String estado;
+    private String precioAcumulado;
+    private String almacen;
+    private String observacion;
 
     public Productos(String descripcion, String nombre, String codigo, String stock, String precio,
                      String cantidad, String flete, String idProducto, String marca, String unidad,
-                     String estado, String precioAcumulado) {
-        Descripcion = descripcion;
-        Nombre = nombre;
-        Codigo = codigo;
-        Stock = stock;
-        Precio = precio;
-        Cantidad = cantidad;
-        Flete = flete;
-        IdProducto = idProducto;
-        Marca = marca;
-        Unidad = unidad;
-        Estado = estado;
-        PrecioAcumulado = precioAcumulado;
+                     String estado, String precioAcumulado, String almacen, String observacion) {
+        this.descripcion = descripcion;
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.stock = stock;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.flete = flete;
+        this.idProducto = idProducto;
+        this.marca = marca;
+        this.unidad = unidad;
+        this.estado = estado;
+        this.precioAcumulado = precioAcumulado;
+        this.almacen = almacen;
+        this.observacion = observacion;
     }
 
     public Productos() {
     }
 
-    public String getNombre() { return Nombre; }
+    public String getObservacion() { return observacion; }
 
-    public String getPrecioAcumulado() { return PrecioAcumulado; }
+    public void setObservacion(String observacion) { this.observacion = observacion; }
 
-    public void setPrecioAcumulado(String precioAcumulado) { PrecioAcumulado = precioAcumulado; }
+    public String getAlmacen() { return almacen; }
+
+    public void setAlmacen(String almacen) {this.almacen = almacen; }
+
+    public String getNombre() { return nombre; }
+
+    public String getPrecioAcumulado() { return precioAcumulado; }
+
+    public void setPrecioAcumulado(String precioAcumulado) { this.precioAcumulado = precioAcumulado; }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
     public String getEstado() {
-        return Estado;
+        return estado;
     }
 
     public void setEstado(String estado) {
-        Estado = estado;
+        this.estado = estado;
     }
 
     public String getIdProducto() {
-        return IdProducto;
+        return idProducto;
     }
 
     public void setIdProducto(String idProducto) {
-        IdProducto = idProducto;
+        this.idProducto = idProducto;
     }
 
     public String getMarca() {
-        return Marca;
+        return marca;
     }
 
     public void setMarca(String marca) {
-        Marca = marca;
+        this.marca = marca;
     }
 
     public String getUnidad() {
-        return Unidad;
+        return unidad;
     }
 
     public void setUnidad(String unidad) {
-        Unidad = unidad;
+        this.unidad = unidad;
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+        this.descripcion = descripcion;
     }
 
     public String getFlete() {
-        return Flete;
+        return flete;
     }
 
     public void setFlete(String flete) {
-        Flete = flete;
+        this.flete = flete;
     }
 
     public String getCantidad() {
-        return Cantidad;
+        return cantidad;
     }
 
     public void setCantidad(String cantidad) {
-        Cantidad = cantidad;
+        this.cantidad = cantidad;
     }
 
     public String getStock() {
-        return Stock;
+        return stock;
     }
 
     public void setStock(String stock) {
-        Stock = stock;
+        this.stock = stock;
     }
 
     public String getPrecio() {
-        return Precio;
+        return precio;
     }
 
     public void setPrecio(String precio) {
-        Precio = precio;
+        this.precio = precio;
     }
 
     public String getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
     public void setCodigo(String codigo) {
-        Codigo = codigo;
+        this.codigo = codigo;
     }
 
 }

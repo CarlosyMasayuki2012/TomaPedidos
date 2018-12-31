@@ -9,17 +9,30 @@ public class Usuario implements Serializable {
     private String codigo;
     private String nombre;
     private String apellido;
+    private String moneda;
+    private String almacen;
 
-    public Usuario(String usuario, String clave, String codigo, String nombre, String apellido) {
+    public Usuario(String usuario, String clave, String codigo, String nombre, String apellido,
+                   String moneda, String almacen) {
         this.usuario = usuario;
         this.clave = clave;
         this.codigo = codigo;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.moneda = moneda;
+        this.almacen = almacen;
     }
 
     public Usuario() {
     }
+
+    public String getMoneda() { return moneda; }
+
+    public void setMoneda(String moneda) { this.moneda = moneda; }
+
+    public String getAlmacen() { return almacen; }
+
+    public void setAlmacen(String almacen) { this.almacen = almacen; }
 
     public String getUsuario() {
         return usuario;

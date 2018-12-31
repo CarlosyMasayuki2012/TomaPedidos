@@ -1,5 +1,6 @@
 package com.example.sistemas.tomapedidos;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -17,8 +18,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
 import com.example.sistemas.tomapedidos.Entidades.Productos;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -30,11 +44,14 @@ public class bandejaProductosActivity extends AppCompatActivity {
     ListView lvbandejaproductos;
     ArrayList<String> listabandejaproductos,listabandejaproductoselegidos;
     Clientes cliente;
-    String cantidad ,Item ,Precio;
+    String cantidad ,Item ,Precio,url;
     View mview;
     Integer cantidadProductos=0;
-    ArrayList<Productos> listaproductoselegidos;
+    ArrayList<Productos> listaproductoselegidos,listaProducto,listaProductosresultante;
     Double precio = 0.0,item=0.0,precioinicial;
+    Usuario  usuario;
+    ProgressDialog progressDialog ;
+    Productos producto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +92,8 @@ public class bandejaProductosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
                 Intent intent = new Intent(bandejaProductosActivity.this,BuscarProductoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Cliente",cliente);
@@ -89,9 +108,44 @@ public class bandejaProductosActivity extends AppCompatActivity {
         btnterminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(bandejaProductosActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder builder =  new AlertDialog.Builder(bandejaProductosActivity.this);
+                    builder.setMessage("Está seguro que desea grabar el pedido")
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Toast.makeText(bandejaProductosActivity.this,
+                                        "Se cancelo la gravacion del Pedido", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            progressDialog = new ProgressDialog(bandejaProductosActivity.this);
+                            progressDialog.setMessage("..actualizando");
+                            progressDialog.show();
+
+                            // Metodo para hacer la actualizacion de los nuevos pedidos
+
+                            // Se hace el recorrido de la lista de los productos elegidos
+                            for (int i=0; i<listabandejaproductoselegidos.size();i++){
+                                String codProducto = listaproductoselegidos.get(i).getCodigo();
+                                String almacen = listaproductoselegidos.get(i).getAlmacen();
+                                String distrito = usuario.getAlmacen();
+                                String codCliente = cliente.getCodCliente();
+                                String cantidad = listaproductoselegidos.get(i).getCantidad();
+                                // se hace la invocacion del metodo para la gravacion de los pedidos
+                                grabarpedidoWS(codProducto,almacen,distrito,codCliente,cantidad);
+                            }
+                            Intent intent = new Intent(bandejaProductosActivity.this,MainActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("Usuario",usuario);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
             }
         });
 
@@ -195,7 +249,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         dialogInterface.cancel();
                         salirlistview();
                     }
@@ -205,13 +258,68 @@ public class bandejaProductosActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                         salirlistview();
-
                     }
                 })
                 .create()
                 .show();
-
-
-
     }
+
+    private void grabarpedidoWS(String numero, String almacen, String distrito, String codCliente, String cantidad) {
+
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+
+        url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion=" +
+                "PKG_WEB_HERRAMIENTAS.SP_WS_CONSULTAR_PRODUCTO&variables='"+almacen+"|"+distrito+"|"+numero+"||"+codCliente+"|||"+cantidad+"'";
+
+
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, url ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("producto");
+                            if (success){
+                                for(int i=0;i<jsonArray.length();i++) {
+                                    producto = new Productos();
+                                    jsonObject = jsonArray.getJSONObject(i);
+                                    producto.setIdProducto(jsonObject.getString("IdProducto"));
+                                    producto.setCodigo(jsonObject.getString("CodigoProducto"));
+                                    producto.setMarca(jsonObject.getString("Marca"));
+                                    producto.setDescripcion(jsonObject.getString("DescripcionProducto"));
+                                    producto.setPrecio(jsonObject.getString("Precio"));
+                                    producto.setStock(jsonObject.getString("Stock"));
+                                    producto.setUnidad(jsonObject.getString("Unidad"));
+                                    producto.setFlete(jsonObject.getString("Flete"));
+                                    producto.setEstado(jsonObject.getString("Estado"));
+                                    listaProductosresultante.add(producto);
+                                }
+
+                            }else {
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
+                                builder.setMessage("No se llego a encontrar el registro")
+                                        .setNegativeButton("Aceptar",null)
+                                        .create()
+                                        .show();
+                            }
+                        } catch (JSONException e) { e.printStackTrace(); }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+    }
+
+
 }

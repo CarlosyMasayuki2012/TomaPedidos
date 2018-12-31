@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
+import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
 public class MostrarClienteActivity extends AppCompatActivity {
 
@@ -16,6 +17,7 @@ public class MostrarClienteActivity extends AppCompatActivity {
     Clientes cliente;
     TextView tvcodigo,tvNombre,tvDireccion,tvGiro,tvTipoCiente,tvDeuda,tvestado,tvFechaUltPedido,
             tvUsuarioUltPedido;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +26,18 @@ public class MostrarClienteActivity extends AppCompatActivity {
 
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
 
         Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
-        tvcodigo = findViewById(R.id.tvcodigoCliente);
+        tvcodigo = findViewById(R.id.tvCofigoProducto);
         tvNombre = findViewById(R.id.tvNombreCliente);
         tvDireccion = findViewById(R.id.tvDireccion);
-        tvGiro = findViewById(R.id.tvGiroCliente);
-        tvTipoCiente = findViewById(R.id.tvTipoCliente);
-        tvDeuda = findViewById(R.id.tvDeuda);
-        tvestado = findViewById(R.id.tvEstado);
-        tvFechaUltPedido = findViewById(R.id.tvfechaultregistro);
-        tvUsuarioUltPedido = findViewById(R.id.tvUsuarioUltPedido);
+        tvGiro = findViewById(R.id.tvNombreProducto);
+        tvTipoCiente = findViewById(R.id.tvAlmacenProducto);
+        tvDeuda = findViewById(R.id.tvStock);
+        tvestado = findViewById(R.id.tvPrecio);
+        tvFechaUltPedido = findViewById(R.id.tvSubtotal);
+        tvUsuarioUltPedido = findViewById(R.id.tvTotal);
 
         tvcodigo.setText(cliente.getCodCliente());
         tvNombre.setText(cliente.getNombre());
@@ -56,6 +59,9 @@ public class MostrarClienteActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtras(bundle);
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("Usuario",usuario);
+                intent.putExtras(bundle1);
                 startActivity(intent);
                 finish();
             }
