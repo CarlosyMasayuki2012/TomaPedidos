@@ -54,18 +54,21 @@ public class DetalleProductoActivity extends AppCompatActivity {
         etcantidadelegida =  findViewById(R.id.etCantidadElegida);
         listaproductoselegidos = new ArrayList<Productos>();
         productos  = new Productos();
+        // se recibe los datos de los productos y del que se han encontrado en el otro intent
+
         productos = (Productos) getIntent().getSerializableExtra("Producto");
         usuario = (Usuario)getIntent().getSerializableExtra("Usuario");
-        cliente = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
-        usuario = (Usuario)getIntent().getSerializableExtra("Usuario");
-        listaproductoselegidos = (ArrayList<Productos>)(ArrayList<Productos>) getIntent()
+
+        listaproductoselegidos = (ArrayList<Productos>) getIntent()
                 .getSerializableExtra("listaproductoselegidos");
 
         // Se referencia a todas las partes del XML asociado al Activity
         tvcodigoproducto =  findViewById(R.id.tvCofigoProducto);
         tvnombreproducto = findViewById(R.id.tvNombreProducto);
         tvalmacenproducto = findViewById(R.id.tvAlmacenProducto);
+
+        // Se hace referencia a cada uno de los TextView del XML
         tvstock  =findViewById(R.id.tvStock);
         tvprecio = findViewById(R.id.tvPrecio);
         tvsubtotal = findViewById(R.id.tvSubtotal);
@@ -74,7 +77,7 @@ public class DetalleProductoActivity extends AppCompatActivity {
         btnguardaryrevisar = findViewById(R.id.btnGuardarrevisar);
         btnguardaryagregar = findViewById(R.id.btnGuardaryagregar);
 
-        // Se hace una nueva
+        // Se genera un nuevo Progress dialog
 
         progressDialog =  new ProgressDialog(DetalleProductoActivity.this);
         progressDialog.setMessage("... Por favor esperar");
@@ -84,7 +87,6 @@ public class DetalleProductoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Toast.makeText(DetalleProductoActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
-                usuario =  new Usuario();
                 //RegistroPedido(); // Esta clase va a hacer el registro de los pedidos que se lleguen a consolidar
             }
         });
@@ -125,16 +127,12 @@ public class DetalleProductoActivity extends AppCompatActivity {
          Double subtotal = total/1.18;
          tvsubtotal.setText(String.valueOf("subtotal"));
          tvtotal.setText(String.valueOf(total));
-
          tvobservacionproducto.setText(producto.getObservacion());
          tvsubtotal.setText(String.valueOf(subtotal));
-
-
     }
 
     private void RegistroPedido() {
 
-        listaproductoselegidos.add(productos);
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         url =  "http://www.taiheng.com.pe:8494/oracle/ejecutaFuncionCursorTestMovil.php?funcion = " +
                 "PKG_WEB_HERRAMIENTAS.SP_WS_GENERA_PEDIDO&variables=[TAI HEN]G Jueves 06.09.2018"; // Se debe de encontrar el metodo
@@ -143,9 +141,7 @@ public class DetalleProductoActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         progressDialog.dismiss();
-                        //btnbuscarProducto.setVisibility(View.VISIBLE); // No se puede haer la presentacion de
                         try {
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
@@ -179,8 +175,6 @@ public class DetalleProductoActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
 
-                                startActivity(intent);
-                                finish();
                             }else {
                                 listaProducto.clear();
                                 AlertDialog.Builder builder = new AlertDialog.Builder(DetalleProductoActivity.this);

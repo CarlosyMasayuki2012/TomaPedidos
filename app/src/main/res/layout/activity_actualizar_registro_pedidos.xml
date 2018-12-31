@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalleProductoActivity">
+    tools:context=".ActualizarRegistroPedidosActivity">
+
 
     <TextView
-        android:id="@+id/tvObservacionProducto"
+        android:id="@+id/tvObsProductoElegido"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
@@ -24,10 +24,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#014284"
-        android:text="Detalle producto"
+        android:text="Actualizar producto"
+        android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,31 +115,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <Button
-        android:id="@+id/btnGuardarrevisar"
-        android:layout_width="150dp"
+        android:id="@+id/btnActualizarElegido"
+        android:layout_width="312dp"
         android:layout_height="60dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
-        android:background="#014284"
-        android:text="Guardar y Revisar"
-        android:textColor="#fff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvObservacionProducto" />
-
-    <Button
-        android:id="@+id/btnGuardaryagregar"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:background="#014284"
-        android:text="Guardar y agregar"
+        android:text="Actualizar"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvObservacionProducto" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvObsProductoElegido" />
 
     <TextView
-        android:id="@+id/tvCofigoProducto"
+        android:id="@+id/tvCodigoProducto"
         android:layout_width="220dp"
         android:layout_height="19dp"
         android:layout_marginTop="8dp"
@@ -150,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/tvDireccion"
+        android:id="@+id/tvCodProdEegido"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -161,7 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/tvNombreProducto"
+        android:id="@+id/tvNomProductoelegido"
         android:layout_width="220dp"
         android:layout_height="51dp"
         android:layout_marginTop="16dp"
@@ -172,64 +162,59 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/tvAlmacenProducto"
+        android:id="@+id/tvAlmacenProductoElegido"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Almacen N° 01"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNombreProducto" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNomProductoelegido" />
 
     <TextView
-        android:id="@+id/tvStock"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="12"
-
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAlmacenProducto" />
-
-    <TextView
-        android:id="@+id/tvPrecio"
+        android:id="@+id/tvStockElegido"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
 
-        android:text="13.50"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStock" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAlmacenProductoElegido" />
 
     <TextView
-        android:id="@+id/tvSubtotal"
+        android:id="@+id/tvPrecioElegido"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStockElegido" />
+
+    <TextView
+        android:id="@+id/tvSubtotalElegido"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
 
-        android:text="125.12"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioElegido" />
 
     <TextView
-        android:id="@+id/tvTotal"
+        android:id="@+id/tvTotalElegido"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="133.25"
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtotal" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtotalElegido" />
 
     <TextView
         android:id="@+id/textView16"
@@ -242,7 +227,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <EditText
-        android:id="@+id/etCantidadElegida"
+        android:id="@+id/etCantidadActualizada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -252,7 +237,7 @@
         android:inputType="textPersonName|numberDecimal"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalElegido" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -58,8 +58,9 @@ public class bandejaProductosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bandeja_productos);
 
-        listaproductoselegidos = new ArrayList<Productos>();
         listaproductoselegidos = (ArrayList<Productos>) getIntent().getSerializableExtra("listaProductoselegidos");
+        cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+
         listabandejaproductos = new ArrayList<>();
         cantidadProductos = listabandejaproductos.size();
         listabandejaproductoselegidos = new ArrayList<>();
@@ -72,15 +73,14 @@ public class bandejaProductosActivity extends AppCompatActivity {
             precio = precio + Double.valueOf(listaproductoselegidos.get(i).getPrecioAcumulado());
             item = item + Double.valueOf(listaproductoselegidos.get(i).getCantidad());
             listabandejaproductoselegidos.add(listaproductoselegidos.get(i).getCodigo().toString());
-
         }
 
         cantidad = String.valueOf(listaproductoselegidos.size());
         Item = String.valueOf(item);
         Precio = String.valueOf(precio);
 
-        cliente = new Clientes();
-        cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        //cliente = new Clientes();
+
         btnbuscarproducto =  findViewById(R.id.btnproducto);
         btnterminar = findViewById(R.id.btnterminar);
         tvtitulodinamico  = findViewById(R.id.tvtitulodinamico);
@@ -91,8 +91,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
         btnbuscarproducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 Intent intent = new Intent(bandejaProductosActivity.this,BuscarProductoActivity.class);
                 Bundle bundle = new Bundle();
@@ -178,7 +176,7 @@ public class bandejaProductosActivity extends AppCompatActivity {
 
                             case 0:
                                 Alertsdialog("Editar el prducto");
-                                Toast.makeText(bandejaProductosActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                                Editarproductoselecionado(position);
                             break;
 
                             case 1:
@@ -209,7 +207,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
                 builder.setMessage(
                         "Codigo     : "  + listaproductoselegidos.get(position).getCodigo() + "\n" +
@@ -222,12 +219,11 @@ public class bandejaProductosActivity extends AppCompatActivity {
                         .create()
                         .show();
 
-
                 Toast.makeText(bandejaProductosActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
-
             }
         });
     }
+
     private void salirlistview (){
 
         Intent intent = new Intent(bandejaProductosActivity.this, bandejaProductosActivity.class);
@@ -319,6 +315,29 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
+    }
+
+    private void Editarproductoselecionado(int position) {
+
+        listaproductoselegidos.get(position);
+        Intent intent =  new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("listaproductoselegidos",listaproductoselegidos);
+        intent.putExtras(bundle);
+        Bundle bundle1 = new Bundle();
+        bundle1.putSerializable("Cliente",cliente);
+        intent.putExtras(bundle1);
+        Bundle bundle2 = new Bundle();
+        bundle2.putSerializable("Usuario",usuario);
+        intent.putExtras(bundle2);
+        startActivity(intent);
+        finish();
+
+
+
+
+
+
     }
 
 
