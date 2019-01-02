@@ -99,9 +99,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        Toast.makeText(this, listaproductoselegidos.get(0).getPrecio(), Toast.LENGTH_SHORT).show();
-
         btnterminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

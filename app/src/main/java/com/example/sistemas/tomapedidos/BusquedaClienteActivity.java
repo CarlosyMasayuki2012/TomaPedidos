@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -140,7 +139,6 @@ public class BusquedaClienteActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             progressDialog.dismiss();
-                            Toast.makeText(BusquedaClienteActivity.this, response, Toast.LENGTH_SHORT).show();
                             btnbuscar.setVisibility(View.VISIBLE);
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
