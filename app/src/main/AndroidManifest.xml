@@ -30,7 +30,6 @@
         <activity android:name=".BuscarProductoActivity" />
         <activity android:name=".DetalleProductoActivity" />
         <activity android:name=".bandejaProductosActivity" />
-        <activity android:name=".BandejaProductosversion2Activity" />
         <activity android:name=".ActualizarRegistroPedidosActivity"></activity>
     </application>
 

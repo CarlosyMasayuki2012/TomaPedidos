@@ -33,7 +33,7 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
     ListView lvtipopago;
     ArrayList<String> listatipopago,listaAux;
     Clientes cliente;
-    String url;
+    String url,almacen;
     ArrayList<Productos> listaproductoselegidos;
     Usuario usuario;
 
@@ -46,8 +46,9 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
         usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
+        almacen = getIntent().getStringExtra("Almacen") ;
 
-        Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Se llego  al " + almacen, Toast.LENGTH_SHORT).show();
 
         listatipopago =  new ArrayList<>();
 
@@ -73,6 +74,7 @@ public class ListadoFormaPagoActivity extends AppCompatActivity {
                 bundle.putSerializable("Cliente",cliente);
                 intent.putExtras(bundle);
                 intent.putExtra("TipoPago",listatipopago.get(position));
+                intent.putExtra("Almacen",almacen);
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
                 intent.putExtras(bundle1);

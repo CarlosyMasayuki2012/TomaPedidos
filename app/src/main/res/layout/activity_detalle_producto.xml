@@ -174,11 +174,10 @@
     <TextView
         android:id="@+id/tvAlmacenProducto"
         android:layout_width="220dp"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
 
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Almacen N° 01"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNombreProducto" />
@@ -189,7 +188,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="12"
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
@@ -202,7 +200,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
 
-        android:text="13.50"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStock" />
@@ -214,7 +211,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
 
-        android:text="125.12"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
@@ -225,7 +221,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="133.25"
 
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"

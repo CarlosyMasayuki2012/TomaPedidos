@@ -42,7 +42,6 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
     @Override
     public void onBindViewHolder(@NonNull bandejaproductosadapter.BandejaProductosHolder bandejaProductosHolder, int i) {
 
-
         String cadenaaux = listaProductos.get(i).getCodigo();
         bandejaProductosHolder.tvNombreProductoBandeja.setText(cadenaaux);
         bandejaProductosHolder.tvstockProductoBandeja.setText(listaProductos.get(i).getStock());
@@ -51,9 +50,7 @@ public class bandejaproductosadapter extends RecyclerView.Adapter<bandejaproduct
         bandejaProductosHolder.tvFleteProductoBandeja.setText(listaProductos.get(i).getFlete());
         Double subtotal = Double.valueOf(listaProductos.get(i).getCantidad()) * Double.valueOf(listaProductos.get(i).getPrecio());
         bandejaProductosHolder.tvSubtotalProductoBandeja.setText(subtotal.toString());
-
     }
-
     @Override
     public int getItemCount() {
 

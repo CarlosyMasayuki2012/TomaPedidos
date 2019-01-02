@@ -44,7 +44,7 @@ public class BuscarProductoActivity extends AppCompatActivity {
     ArrayList<String> listaProducto;
     Clientes cliente;
     EditText etproducto;
-    String url,Tipobusqueda,tipoPago;
+    String url,Tipobusqueda,tipoPago,almacen;
     ProgressDialog progressDialog;
     Usuario usuario;
 
@@ -58,7 +58,9 @@ public class BuscarProductoActivity extends AppCompatActivity {
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
         usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
         tipoPago = (String)getIntent().getStringExtra("TipoPago");
+        almacen = getIntent().getStringExtra("Almacen");
 
+        Toast.makeText(this, "Se encuentra en " + almacen, Toast.LENGTH_SHORT).show();
        // Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
         listaProductos = new ArrayList<>();
@@ -100,9 +102,10 @@ public class BuscarProductoActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                progressDialog.dismiss();
                 producto = new Productos();
-
                 Intent intent =  new Intent(BuscarProductoActivity.this,DetalleProductoActivity.class);
+                intent.putExtra("Almacen",almacen);
                 Bundle bundle = new Bundle();
                 producto =  listaProductos.get(position);
                 bundle.putSerializable("Producto",producto);
@@ -141,6 +144,7 @@ public class BuscarProductoActivity extends AppCompatActivity {
 
     private void buscarproducto(String numero, String tipoConsulta) {
 
+        progressDialog.dismiss();
         RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
         url =  "http://mydsystems.com/pruebaDaniel/ConsultaProducto.php?producto='"+numero+"'&tipobusqueda=" + tipoConsulta;
         listaProducto = new ArrayList<>();
@@ -149,7 +153,8 @@ public class BuscarProductoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        progressDialog.dismiss();
+
+                        Toast.makeText(BuscarProductoActivity.this, "Se ha ingresado a esat", Toast.LENGTH_SHORT).show();
                         btnbuscarProducto.setVisibility(View.VISIBLE);
                         try {
                             JSONObject jsonObject=new JSONObject(response);
@@ -168,6 +173,7 @@ public class BuscarProductoActivity extends AppCompatActivity {
                                     producto.setUnidad(jsonObject.getString("Unidad"));
                                     producto.setFlete(jsonObject.getString("Flete"));
                                     producto.setEstado(jsonObject.getString("Estado"));
+                                    producto.setAlmacen(almacen);
                                     listaProductos.add(producto);
                                     listaProducto.add(producto.getCodigo()+ " - " + producto.getDescripcion());
 

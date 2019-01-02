@@ -47,8 +47,8 @@ public class bandejaProductosActivity extends AppCompatActivity {
     String cantidad ,Item ,Precio,url;
     View mview;
     Integer cantidadProductos=0;
-    ArrayList<Productos> listaproductoselegidos,listaProducto,listaProductosresultante;
-    Double precio = 0.0,item=0.0,precioinicial;
+    ArrayList<Productos> listaproductoselegidos,listaProductosresultante;
+    Double precio = 0.0,item=0.0;
     Usuario  usuario;
     ProgressDialog progressDialog ;
     Productos producto;
@@ -58,16 +58,15 @@ public class bandejaProductosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bandeja_productos);
 
+        // Se captura los parametros de los otros Intent
         listaproductoselegidos = (ArrayList<Productos>) getIntent().getSerializableExtra("listaProductoselegidos");
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
-
         listabandejaproductos = new ArrayList<>();
         cantidadProductos = listabandejaproductos.size();
         listabandejaproductoselegidos = new ArrayList<>();
 
         // valores para el sumarizado de la bandeja
 
-        precioinicial = Double.valueOf(listaproductoselegidos.get(0).getPrecio());
         for (int i=0;i<listaproductoselegidos.size();i++){
            // calcula numero de productos
             precio = precio + Double.valueOf(listaproductoselegidos.get(i).getPrecioAcumulado());
@@ -78,9 +77,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
         cantidad = String.valueOf(listaproductoselegidos.size());
         Item = String.valueOf(item);
         Precio = String.valueOf(precio);
-
-        //cliente = new Clientes();
-
         btnbuscarproducto =  findViewById(R.id.btnproducto);
         btnterminar = findViewById(R.id.btnterminar);
         tvtitulodinamico  = findViewById(R.id.tvtitulodinamico);
@@ -103,6 +99,9 @@ public class bandejaProductosActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Toast.makeText(this, listaproductoselegidos.get(0).getPrecio(), Toast.LENGTH_SHORT).show();
+
         btnterminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,9 +110,9 @@ public class bandejaProductosActivity extends AppCompatActivity {
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Toast.makeText(bandejaProductosActivity.this,
-                                        "Se cancelo la gravacion del Pedido", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            Toast.makeText(bandejaProductosActivity.this,
+                                    "Se cancelo la gravacion del Pedido", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -127,14 +126,14 @@ public class bandejaProductosActivity extends AppCompatActivity {
                             // Metodo para hacer la actualizacion de los nuevos pedidos
 
                             // Se hace el recorrido de la lista de los productos elegidos
-                            for (int i=0; i<listabandejaproductoselegidos.size();i++){
+                            for (int i=0; i<listaproductoselegidos.size();i++){
                                 String codProducto = listaproductoselegidos.get(i).getCodigo();
                                 String almacen = listaproductoselegidos.get(i).getAlmacen();
                                 String distrito = usuario.getAlmacen();
                                 String codCliente = cliente.getCodCliente();
                                 String cantidad = listaproductoselegidos.get(i).getCantidad();
                                 // se hace la invocacion del metodo para la gravacion de los pedidos
-                                grabarpedidoWS(codProducto,almacen,distrito,codCliente,cantidad);
+                                //grabarpedidoWS(codProducto,almacen,distrito,codCliente,cantidad);
                             }
                             Intent intent = new Intent(bandejaProductosActivity.this,MainActivity.class);
                             Bundle bundle = new Bundle();
@@ -147,14 +146,10 @@ public class bandejaProductosActivity extends AppCompatActivity {
             }
         });
 
-      //  listabandejaproductos.add(detalle);
-
         lvbandejaproductos =  findViewById(R.id.lvbandejaProductos);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,listabandejaproductoselegidos);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.
+                support_simple_spinner_dropdown_item,listabandejaproductoselegidos);
         lvbandejaproductos.setAdapter(adapter);
-
         lvbandejaproductos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -173,24 +168,17 @@ public class bandejaProductosActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                         String msg = "";
                         switch (i){
-
                             case 0:
                                 Alertsdialog("Editar el prducto");
                                 Editarproductoselecionado(position);
                             break;
-
                             case 1:
                                 listaproductoselegidos.remove(position);
-
                                 Alertsdialog("Borrar el producto");
-
                             break;
-
                             case 2:
                                 Alertsdialog("Cancelar");
-
                             break; }
-
                     }
                 });
 
@@ -292,7 +280,6 @@ public class bandejaProductosActivity extends AppCompatActivity {
                                     producto.setEstado(jsonObject.getString("Estado"));
                                     listaProductosresultante.add(producto);
                                 }
-
                             }else {
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(bandejaProductosActivity.this);
@@ -317,28 +304,21 @@ public class bandejaProductosActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Editarproductoselecionado(int position) {
+    private void Editarproductoselecionado(Integer position) {
 
-        listaproductoselegidos.get(position);
-        Intent intent =  new Intent();
+        producto = listaproductoselegidos.get(position);
+        Intent intent =  new Intent(bandejaProductosActivity.this, ActualizarRegistroPedidosActivity.class);
+        intent.putExtra("position",position.toString());
         Bundle bundle = new Bundle();
-        bundle.putSerializable("listaproductoselegidos",listaproductoselegidos);
+        bundle.putSerializable("Usuario",usuario);
         intent.putExtras(bundle);
         Bundle bundle1 = new Bundle();
-        bundle1.putSerializable("Cliente",cliente);
+        bundle1.putSerializable("listaproductoselegidos",listaproductoselegidos);
         intent.putExtras(bundle1);
         Bundle bundle2 = new Bundle();
-        bundle2.putSerializable("Usuario",usuario);
+        bundle2.putSerializable("Cliente",cliente);
         intent.putExtras(bundle2);
         startActivity(intent);
         finish();
-
-
-
-
-
-
     }
-
-
 }

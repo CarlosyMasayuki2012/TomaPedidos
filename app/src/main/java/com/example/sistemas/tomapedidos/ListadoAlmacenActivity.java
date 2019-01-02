@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.example.sistemas.tomapedidos.Entidades.Clientes;
 import com.example.sistemas.tomapedidos.Entidades.Usuario;
 
@@ -29,7 +27,6 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
         cliente  = new Clientes();
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
         usuario = (Usuario) getIntent().getSerializableExtra("Usuario");
-        Toast.makeText(this,cliente.getIdCliente(), Toast.LENGTH_SHORT).show();
 
         listaalmacen =  new ArrayList<>();
         listaalmacen.add("T02");
@@ -60,7 +57,6 @@ public class ListadoAlmacenActivity extends AppCompatActivity {
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
-                Toast.makeText(ListadoAlmacenActivity.this, listaalmacen.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,13 +40,13 @@ public class DetalleProductoActivity extends AppCompatActivity {
     Clientes cliente;
     ArrayList<Productos> listaproductoselegidos;
     EditText etcantidadelegida;
-    Double preciounitario,cantidad;
-    Usuario usuario;
-    String url;
+    Double preciounitario,cantidad, precio, total, subtotal,Aux;
+    String url,almacen;
     ProgressDialog progressDialog;
     Productos producto;
     ArrayList<Productos> listaProductos;
     ArrayList<String> listaProducto;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,10 @@ public class DetalleProductoActivity extends AppCompatActivity {
         productos = (Productos) getIntent().getSerializableExtra("Producto");
         usuario = (Usuario)getIntent().getSerializableExtra("Usuario");
         cliente = (Clientes)getIntent().getSerializableExtra("Cliente");
+        almacen =  getIntent().getStringExtra("Almacen");
+        Toast.makeText(this, almacen, Toast.LENGTH_SHORT).show();
 
-        listaproductoselegidos = (ArrayList<Productos>) getIntent()
-                .getSerializableExtra("listaproductoselegidos");
+        listaproductoselegidos = (ArrayList<Productos>) getIntent().getSerializableExtra("listaproductoselegidos");
 
         // Se referencia a todas las partes del XML asociado al Activity
         tvcodigoproducto =  findViewById(R.id.tvCofigoProducto);
@@ -88,32 +91,38 @@ public class DetalleProductoActivity extends AppCompatActivity {
 
                 Toast.makeText(DetalleProductoActivity.this, "Se ha registrado correctamente", Toast.LENGTH_SHORT).show();
                 //RegistroPedido(); // Esta clase va a hacer el registro de los pedidos que se lleguen a consolidar
+
             }
         });
         btnguardaryrevisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                productos.setCantidad(etcantidadelegida.getText().toString());
-                preciounitario = Double.valueOf(productos.getPrecio());
-                cantidad = Double.valueOf(productos.getCantidad());
-                productos.setPrecioAcumulado(String.valueOf(Math.ceil((cantidad*preciounitario*100.00))/100.00)); // Se hace la definicion del precio que se va ha acumular
-                Toast.makeText(DetalleProductoActivity.this, productos.getPrecioAcumulado().toString(), Toast.LENGTH_SHORT).show();
-                productos.setEstado(String.valueOf(cantidad)); // Se define la cantidad que e debe de tener
-                listaproductoselegidos.add(productos);
-                Intent intent = new Intent(DetalleProductoActivity.this,bandejaProductosActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("listaProductoselegidos", listaproductoselegidos);
-                intent.putExtras(bundle);
-                Bundle bundle1 = new Bundle();
-                bundle1.putSerializable("Cliente",cliente);
-                intent.putExtras(bundle1);
-                Bundle bundle2 = new Bundle();
-                bundle2.putSerializable("Usuario",usuario);
-                intent.putExtras(bundle2);
-                startActivity(intent);
-                finish();
+                progressDialog.dismiss();
+                if (etcantidadelegida.getText().toString().equals("")){
 
+                }else{
+
+                    productos.setCantidad(etcantidadelegida.getText().toString());
+                    preciounitario = Double.valueOf(productos.getPrecio());
+                    cantidad = Double.valueOf(productos.getCantidad());
+                    productos.setPrecioAcumulado(String.valueOf(Math.ceil((cantidad*preciounitario*100.00))/100.00)); // Se hace la definicion del precio que se va ha acumular
+                    productos.setEstado(String.valueOf(cantidad)); // Se define la cantidad que se debe de tener
+                    productos.setAlmacen(almacen);
+                    listaproductoselegidos.add(productos);
+                    Intent intent = new Intent(DetalleProductoActivity.this,bandejaProductosActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("listaProductoselegidos", listaproductoselegidos);
+                    intent.putExtras(bundle);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("Cliente",cliente);
+                    intent.putExtras(bundle1);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable("Usuario",usuario);
+                    intent.putExtras(bundle2);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -122,13 +131,50 @@ public class DetalleProductoActivity extends AppCompatActivity {
          tvalmacenproducto.setText(productos.getAlmacen());
          tvstock.setText(productos.getStock());
          tvprecio.setText(productos.getPrecio());
-         Double total = Double.valueOf(productos.getPrecio());
-         total = total*cantidad;
-         Double subtotal = total/1.18;
-         tvsubtotal.setText(String.valueOf("subtotal"));
-         tvtotal.setText(String.valueOf(total));
+         precio = Double.valueOf(productos.getPrecio());
+         tvalmacenproducto.setText(almacen);
+
+
+          final TextWatcher textWatcher = new TextWatcher() {
+             @Override
+             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+             }
+
+             @Override
+             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+             }
+
+             @Override
+             public void afterTextChanged(Editable s) {
+
+                 if (etcantidadelegida.getText().toString().equals("")){
+
+                     Aux = 0d;
+                     tvtotal.setText("");
+                     tvsubtotal.setText("");
+
+                 }else {
+
+                     Double Aux = Double.valueOf(etcantidadelegida.getText().toString());
+                     Aux = precio * Aux;
+                     subtotal = Aux/1.18;
+                     tvtotal.setText(String.format("%.2f", (double)Aux));
+                     tvsubtotal.setText(String.format("%.2f",(double)subtotal));
+                 }
+             }
+         };
+
+        etcantidadelegida.addTextChangedListener(textWatcher);
+
+        //tvsubtotal.setText(String.format("%.2f", (double)subtotal));
+
+           /*
+         tvtotal.setText(String.valueOf(precio));
          tvobservacionproducto.setText(producto.getObservacion());
          tvsubtotal.setText(String.valueOf(subtotal));
+*/
     }
 
     private void RegistroPedido() {
@@ -141,7 +187,7 @@ public class DetalleProductoActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
+
                         try {
                             JSONObject jsonObject=new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
